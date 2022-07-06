@@ -189,12 +189,22 @@ public class Result implements Serializable {
 
         @SuppressWarnings("unchecked")
         private SerializedForm(ObjectInputStream.GetField fields) throws IOException {
-            fCount = (AtomicInteger) fields.get("fCount", null);
-            fIgnoreCount = (AtomicInteger) fields.get("fIgnoreCount", null);
-            assumptionFailureCount = (AtomicInteger) fields.get("assumptionFailureCount", null);
-            fFailures = (List<Failure>) fields.get("fFailures", null);
-            fRunTime = fields.get("fRunTime", 0L);
-            fStartTime = fields.get("fStartTime", 0L);
+            try {
+                fCount = (AtomicInteger) fields.get("fCount", null);
+                fIgnoreCount = (AtomicInteger) fields.get("fIgnoreCount", null);
+                assumptionFailureCount = (AtomicInteger) fields.get("assumptionFailureCount", null);
+                fFailures = (List<Failure>) fields.get("fFailures", null);
+                fRunTime = fields.get("fRunTime", 0L);
+                fStartTime = fields.get("fStartTime", 0L);
+                // BEGIN NEW_CHANGE
+            } catch (ClassNotFoundException e) {
+                // JDK 18 started throwing ClassNotFoundException error
+                // Here, we simply wrap it with IOException.
+                //
+                // https://bugs.openjdk.org/browse/JDK-8277135?jql=parent%3DJDK-8276665
+                throw new IOException(e);
+                // END NEW_CHANGE
+            }
         }
 
         public void serialize(ObjectOutputStream s) throws IOException {

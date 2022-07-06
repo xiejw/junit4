@@ -1,0 +1,6 @@
+# Java Output
+.build
+
+# Vim
+*.swo
+*.swp
