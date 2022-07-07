@@ -3,7 +3,7 @@ This is the fork of https://github.com/junit-team/junit4
 
 To compile
 ```sh
-javac -sourcepath src/main/java -cp lib/hamcrest-core-1.3.jar  -d .build src/main/java/org/junit/runner/JUnitCore.java
+make
 ```
 
 # JUnit 4
