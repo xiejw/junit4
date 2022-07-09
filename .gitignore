@@ -1,5 +1,6 @@
 # Java Output
 .build
+lib/junit4.jar
 
 # Vim
 *.swo
